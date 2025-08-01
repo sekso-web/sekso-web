@@ -125,7 +125,7 @@ function scrollChatToBottom(force = false) {
       requestAnimationFrame(() => {
         const lastMessage = el.lastElementChild;
         if (lastMessage) {
-          lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+          lastMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
       });
     });
@@ -630,34 +630,6 @@ saveProfileBtn.addEventListener("click", async () => {
     showError("Profil güncellenemedi: " + e.message);
   }
 });
-
-let touchStartX = 0;
-let touchEndX = 0;
-
-chatPanel.addEventListener('touchstart', e => {
-  touchStartX = e.changedTouches[0].screenX;
-});
-
-chatPanel.addEventListener('touchend', e => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleGesture();
-});
-
-function handleGesture() {
-  const threshold = 50; // px, hareket minimumu
-
-  if (touchEndX + threshold < touchStartX) {
-    // Sola kaydırıldı - sidebar veya profile açılabilir (sağ panel varsayalım)
-    openProfilePanel();
-  } else if (touchEndX - threshold > touchStartX) {
-    // Sağa kaydırıldı - sidebar açılabilir
-    openSidebar();
-  } else {
-    // Çok küçük hareket, kapat
-    closePanels();
-  }
-}
-
 
 // -----------------------
 // MESAJLAŞMA

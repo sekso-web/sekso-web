@@ -467,6 +467,9 @@ body,
     overflow-y: auto;
     border-top: 1.5px solid #555;
     padding-top: 10px;
+    padding-bottom: 60px;
+    /* mobilde footer altında kalmasın */
+    box-sizing: border-box;
 }
 
 #activeUsersSection h3 {
@@ -482,10 +485,12 @@ body,
     flex-direction: column;
     gap: 8px;
     font-size: 0.75rem;
+    padding: 0 10px;
 }
 
 #activeUsersList li {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     background: #111;
@@ -493,6 +498,7 @@ body,
     border-radius: 6px;
     border: 1px solid #444;
     box-shadow: none;
+    word-break: break-word;
 }
 
 #activeUsersList li .pfp {
@@ -501,6 +507,12 @@ body,
     border-radius: 50%;
     object-fit: cover;
     border: none;
+    flex-shrink: 0;
+}
+
+#activeUsersList li span {
+    max-width: calc(100% - 40px);
+    word-break: break-word;
 }
 
 /* Scrollbars */
@@ -676,6 +688,9 @@ body,
     margin-top: 10px;
 }
 
+.mobile-bar {
+    display: none;
+}
 
 
 /* Responsive */
@@ -683,39 +698,38 @@ body,
 @media (max-width: 768px) {
     #app {
         flex-direction: column;
-        /* üst üste stack */
         height: 100vh;
-        /* tam ekran yükseklik */
         overflow: hidden;
-        /* kaydırmayı JS ile yapacağız */
     }
 
     #sidebar,
     #profile-panel {
         display: none;
-        /* varsayılan gizle */
         width: 100%;
-        /* tam genişlik */
         height: 100vh;
         position: fixed;
         top: 0;
         left: 0;
-        background: white;
+        background-color: #111 !important;
+        color: #fdaea7 !important;
         z-index: 100;
         overflow-y: auto;
         transition: transform 0.3s ease;
+        padding-top: 60px;
+        box-sizing: border-box;
     }
 
-    /* Aktif sidebar görünür */
-    #sidebar.active {
-        display: block;
-        transform: translateX(0);
-    }
-
-    /* Aktif profile-panel görünür */
+    #sidebar.active,
     #profile-panel.active {
         display: block;
         transform: translateX(0);
+    }
+
+    #profile-panel img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
     }
 
     #chat-panel {
@@ -723,9 +737,12 @@ body,
         height: 100vh;
         width: 100%;
         overflow-y: auto;
+        background-color: #111 !important;
+        color: #fdaea7 !important;
+        padding-top: 60px;
+        box-sizing: border-box;
     }
 
-    /* Chat-panel sağa veya sola kaydırma durumları için */
     #chat-panel.slide-left {
         transform: translateX(-100%);
         transition: transform 0.3s ease;
@@ -736,86 +753,122 @@ body,
         transition: transform 0.3s ease;
     }
 
-    /* Mesaj kutusu yüksekliği ve footer pozisyonu için */
     .chat-footer {
         position: fixed;
         bottom: 0;
         width: 100%;
-        background: white;
+        background: #111;
         display: flex;
         align-items: center;
         padding: 8px;
-        box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.8);
         z-index: 110;
+        border-top: 1px solid #333;
     }
 
     #messageInput {
         flex-grow: 1;
         resize: none;
+        background-color: #1a1a1a;
+        color: #fdaea7;
+        font-size: 16px;
+        border: 1px solid #555;
+        outline: none;
     }
 
-    /* Mesajlar için chat-messages bölümünü footer üstünde tut */
     #chat-messages {
-        padding-bottom: 60px;
-        /* footer boşluk bırak */
+        padding-bottom: 150px;
         overflow-y: auto;
-        height: calc(100vh - 60px);
+        height: calc(100vh - 150px);
     }
-}
 
-/* ============================ */
-/* Mobil üst panel ve düzeltmeler */
-/* ============================ */
-
-/* Mobil üst bar */
-.mobile-bar {
-    display: none;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #111;
-    padding: 8px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-    border-bottom: 1px solid #333;
-}
-
-.mobile-bar button {
-    background: none;
-    border: none;
-    color: #fdaea7;
-    font-size: 20px;
-    padding: 5px 10px;
-}
-
-/* Sadece mobilde göster */
-@media screen and (max-width: 768px) {
+    /* Mobil üst bar */
     .mobile-bar {
         display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 44px;
+        background: #111;
+        z-index: 1000;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        border-bottom: 1px solid #333;
     }
-}
 
-/* Mesaj yazma kutusunun görünürlüğü düzeltme */
-#messageInput {
-    background-color: #1a1a1a;
-    color: #fdaea7;
-    font-size: 16px;
-    /* oto zoom engellenir */
-    border: 1px solid #555;
-    outline: none;
-}
+    .mobile-bar button {
+        background: none;
+        border: none;
+        color: #fdaea7;
+        font-size: 20px;
+        padding: 5px 10px;
+    }
 
-/* Chat ekranı kaymasını engelle */
-.chat-container,
-.messages {
-    overflow-x: hidden !important;
-    width: 100%;
-}
+    /* Sadece mobilde göster, PC'de gizle */
+    @media (min-width: 769px) {
+        .mobile-bar {
+            display: none !important;
+        }
+    }
 
-/* Mesaj balonları kaymasın */
-.message-bubble {
-    max-width: 90vw;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    /* Chat alanı yatay taşmayı engelle */
+    .chat-container,
+    .messages {
+        overflow-x: hidden !important;
+        width: 100%;
+    }
+
+    .message-bubble {
+        max-width: 90vw;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* === Aktif kullanıcılar (mobil) === */
+    #authButtonsWrapper,
+    #registerForm {
+        margin-bottom: 15px;
+    }
+
+    .active-user-list {
+        margin-top: 10px;
+        padding: 0 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .active-user {
+        display: flex;
+        align-items: center;
+        background-color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 6px;
+        padding: 6px 10px;
+        overflow: hidden;
+        flex-wrap: nowrap;
+        max-width: 100%;
+    }
+
+    .active-user img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+        margin-right: 8px;
+    }
+
+    .active-user .username {
+        color: #fdaea7;
+        font-size: 14px;
+        word-break: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+        min-width: 0;
+    }
 }
