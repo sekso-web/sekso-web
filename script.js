@@ -69,7 +69,7 @@ const pfpUpload = document.getElementById("pfpUpload");
 const saveProfileBtn = document.getElementById("saveProfileBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
-const app = document.getElementById("app");
+const appElement = document.getElementById("app");
 const sidebar = document.getElementById("sidebar");
 const profilePanel = document.getElementById("profile-panel");
 const chatPanel = document.getElementById("chat-panel");
