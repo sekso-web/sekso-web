@@ -646,10 +646,10 @@ chatPanel.addEventListener('touchend', e => {
 function handleGesture() {
   const threshold = 50; // px, hareket minimumu
 
-  if(touchEndX + threshold < touchStartX) {
+  if (touchEndX + threshold < touchStartX) {
     // Sola kaydırıldı - sidebar veya profile açılabilir (sağ panel varsayalım)
     openProfilePanel();
-  } else if(touchEndX - threshold > touchStartX) {
+  } else if (touchEndX - threshold > touchStartX) {
     // Sağa kaydırıldı - sidebar açılabilir
     openSidebar();
   } else {
@@ -1088,6 +1088,30 @@ document.getElementById("mediaModalClose").addEventListener("click", () => {
   }
 
   modal.classList.remove("active");
+});
+
+// Mobil üst panel butonları
+// Mobil üst panel butonları
+const mobileBoardsBtn = document.getElementById("mobileBoardsBtn");
+const mobileUsersBtn = document.getElementById("mobileUsersBtn");
+const mobileSearchBtn = document.getElementById("mobileSearchBtn");
+
+mobileBoardsBtn.addEventListener("click", () => {
+  sidebar.classList.add("active");
+  profilePanel.classList.remove("active");
+  chatPanel.classList.add("slide-left");
+});
+
+mobileUsersBtn.addEventListener("click", () => {
+  profilePanel.classList.add("active");
+  sidebar.classList.remove("active");
+  chatPanel.classList.add("slide-right");
+});
+
+mobileSearchBtn.addEventListener("click", () => {
+  sidebar.classList.remove("active");
+  profilePanel.classList.remove("active");
+  chatPanel.classList.remove("slide-left", "slide-right");
 });
 
 (async () => {
