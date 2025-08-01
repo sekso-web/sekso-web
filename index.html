@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="svpp.png" />
+  <title>Seksoweb beta11</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts (retro pixel style için) -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- SOL KISIM: Board Sekmeleri -->
+    <nav id="sidebar">
+      <ul class="board-list">
+        <li class="board-item active" data-board="genel" title="Genel Chat">
+          <span class="icon">🏠</span>
+          <span class="label">Genel</span>
+        </li>
+        <li class="board-item" data-board="pol">mu</li>
+        <li class="board-item" data-board="res">lbd</li>
+        <li class="board-item" data-board="kar">sar</li>
+      </ul>
+      <div class="board-logo">
+        <img src="svpp.png" alt="logo" />
+      </div>
+    </nav>
+
+    <!-- ORTA KISIM: Chat Paneli -->
+    <main id="chat-panel">
+      <header class="chat-header">
+        <input type="text" id="searchInput" placeholder="Mesaj veya kullanıcı ara..." autocomplete="off" />
+        <input type="file" id="mediaInput" multiple accept="image/*,video/*" style="display:none" />
+        <select id="searchUserSelect" title="Kullanıcı seç (opsiyonel)">
+          <option value="">Tüm kullanıcılar</option>
+          <!-- Dinamik doldurulacak -->
+        </select>
+      </header>
+
+      <section id="chat-messages" tabindex="0">
+        <!-- Mesajlar buraya gelecek -->
+      </section>
+
+      <div class="chat-footer">
+        <button id="mediaUploadBtn">+</button>
+        <button id="gifBtn">GIF</button>
+        <textarea id="messageInput" placeholder="Bir şey yaz..."></textarea>
+        <button id="sendBtn">Gönder</button>
+        <div id="mediaPreviewArea" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;"></div>
+      </div>
+    </main>
+
+    <!-- SAĞ KISIM: Profil & Aktif Kullanıcılar -->
+    <aside id="profile-panel">
+      <div id="user-info">
+        <img id="userPfp" src="pfp.png" alt="Profil Resmi" />
+
+        <!-- Görünen isim (displayName) -->
+        <div id="userDisplayName">Anonim Kullanıcı</div> <!-- Display Name -->
+        <div id="userUsername" style="font-size: 0.7em; color: #ccc; margin-top: 2px;">@anon1</div> <!-- Username -->
+        <div id="authButtons">
+          <button id="loginBtn" class="auth-button">Giriş</button>
+          <button id="registerBtn" class="auth-button">Kayıt</button>
+        </div>
+
+        <div id="profileEdit" style="display:none;">
+          <input type="text" id="displayNameInput" placeholder="İsim" />
+          <input type="color" id="colorPicker" title="Yazı rengini seç" />
+          <label for="pfpUpload" class="pfp-upload-label auth-button">PP Yükle</label>
+          <input type="file" id="pfpUpload" accept="image/*" style="display:none" />
+
+          <button id="saveProfileBtn" class="auth-button">Kaydet</button>
+          <button id="logoutBtn" class="auth-button">Çıkış</button>
+        </div>
+      </div>
+
+      <div id="activeUsersSection">
+        <h3>Aktif Kullanıcılar</h3>
+        <ul id="activeUsersList">
+          <!-- Dinamik kullanıcı listesi -->
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Tam ekran medya görüntüleme modalı -->
+  <!-- Medya fullview modal -->
+  <div id="mediaModal" class="media-modal">
+    <button id="mediaModalClose" class="media-modal-close">×</button>
+    <div class="media-modal-content-container">
+      <img id="mediaModalContent" src="" alt="Media fullview" />
+    </div>
+  </div>
+
+  <!-- Giriş Yap Modal -->
+  <div id="loginModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h2>Giriş Yap</h2>
+      <label for="loginUsername">Kullanıcı Adı:</label>
+      <input type="text" id="loginUsername" autocomplete="username" />
+      <label for="loginPassword">Şifre:</label>
+      <input type="password" id="loginPassword" autocomplete="current-password" />
+      <button id="loginSubmitBtn">Giriş Yap</button>
+      <button class="modalCloseBtn">Kapat</button>
+    </div>
+  </div>
+
+  <!-- Kayıt Ol Modal -->
+  <div id="registerModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h2>Kayıt Ol</h2>
+      <label for="registerUsername">Kullanıcı Adı:</label>
+      <input type="text" id="registerUsername" autocomplete="username" />
+      <label for="registerEmail">E-posta:</label>
+      <input type="email" id="registerEmail" autocomplete="email" />
+      <label for="registerPassword">Şifre:</label>
+      <input type="password" id="registerPassword" autocomplete="new-password" />
+      <button id="registerSubmitBtn">Kayıt Ol</button>
+      <button class="modalCloseBtn">Kapat</button>
+    </div>
+  </div>
+
+  <!-- Hata Mesajı Modalı -->
+  <div id="errorModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3>Hata</h3>
+      <p id="errorMessage"></p>
+      <button class="modalCloseBtn">Kapat</button>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+
+</html>
